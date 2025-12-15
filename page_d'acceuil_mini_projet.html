@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GameZone - Accueil</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #02110f;
+        --primary: #1abc9c;   /* turquoise principal */
+        --secondary: #20e3b2; /* turquoise clair / néon */
+        --card: rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", "Segoe UI", Arial, sans-serif;
+        min-height: 100vh;
+        background: radial-gradient(circle at 15% 0, #10443c, var(--bg));
+        color: #f5f6ff;
+        padding: 40px 6vw 80px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      h1 {
+        font-size: clamp(2.5rem, 6vw, 3.8rem);
+        letter-spacing: 1px;
+      }
+
+      header p {
+        font-size: 1.1rem;
+        opacity: 0.85;
+        margin-top: 8px;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 30px;
+        flex-wrap: wrap;
+      }
+
+      .nav a {
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 12px 28px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #fdfdff;
+        transition: 0.2s ease;
+      }
+
+      .nav a[href="#accueil"] {
+        background: var(--primary);
+        border: none;
+      }
+
+      .nav a[href="#liste-jeux"] {
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .nav a[href="#apropos"] {
+        background: rgba(32, 227, 178, 0.18);
+      }
+
+      .nav a:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 25px rgba(0, 0, 0, 0.35);
+      }
+
+      .page-section {
+        display: none;
+      }
+
+      .page-section:target {
+        display: block;
+      }
+
+      .page-section#accueil {
+        display: block;
+      }
+
+      .hero {
+        background: linear-gradient(135deg, rgba(32, 227, 178, 0.28), rgba(5, 90, 74, 0.7));
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 22px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+        margin-bottom: 40px;
+      }
+
+      .menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 30px;
+      }
+
+      .menu a {
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        padding: 12px 28px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: #fdfdff;
+        transition: 0.2s ease;
+      }
+
+      .menu a:nth-child(1) {
+        background: var(--primary);
+        border: none;
+      }
+
+      .menu a:nth-child(2) {
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .menu a:nth-child(3) {
+        background: rgba(32, 227, 178, 0.18);
+      }
+
+      .menu a:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 25px rgba(0, 0, 0, 0.35);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 18px;
+        padding: 24px;
+        text-align: left;
+        backdrop-filter: blur(6px);
+      }
+
+      .card h3 {
+        color: var(--secondary);
+        margin-bottom: 10px;
+        font-size: 1.15rem;
+      }
+
+      .card p {
+        font-size: 0.95rem;
+        opacity: 0.8;
+      }
+
+      .news {
+        background: linear-gradient(120deg, rgba(32, 227, 178, 0.25), rgba(3, 57, 47, 0.8));
+        border-radius: 18px;
+        padding: 30px;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+      }
+
+      .news small {
+        letter-spacing: 0.15em;
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* Styles pour la page Liste des jeux */
+      .filters {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+      }
+
+      .filter-btn {
+        padding: 10px 20px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+        color: #f5f6ff;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .filter-btn:hover,
+      .filter-btn.active {
+        background: var(--primary);
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      .games-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .game-card {
+        background: var(--card);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 18px;
+        padding: 24px;
+        backdrop-filter: blur(6px);
+        transition: 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .game-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        border-color: rgba(32, 227, 178, 0.3);
+      }
+
+      .game-icon {
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      .game-card h3 {
+        color: var(--secondary);
+        font-size: 1.3rem;
+        margin-bottom: 8px;
+      }
+
+      .game-card p {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        line-height: 1.6;
+        flex-grow: 1;
+      }
+
+      .game-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.85rem;
+      }
+
+      .game-rating {
+        color: var(--secondary);
+        font-weight: 600;
+      }
+
+      .game-genre {
+        opacity: 0.7;
+      }
+
+      .game-btn {
+        margin-top: 12px;
+        padding: 10px 20px;
+        background: rgba(32, 227, 178, 0.2);
+        border: 1px solid rgba(32, 227, 178, 0.4);
+        border-radius: 8px;
+        color: var(--secondary);
+        text-align: center;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+      }
+
+      .game-btn:hover {
+        background: var(--primary);
+        color: #02110f;
+        border-color: var(--primary);
+      }
+
+      .stats-section {
+        background: linear-gradient(120deg, rgba(32, 227, 178, 0.25), rgba(3, 57, 47, 0.8));
+        border-radius: 18px;
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+        margin-bottom: 30px;
+      }
+
+      .stat-item {
+        text-align: center;
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--secondary);
+        display: block;
+      }
+
+      .stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-top: 4px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 0.85rem;
+        opacity: 0.65;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        body {
+          padding: 30px 4vw 60px;
+        }
+
+        .hero {
+          padding: 32px 24px;
+        }
+
+        .games-grid {
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 20px;
+        }
+
+        .stats-section {
+          grid-template-columns: repeat(2, 1fr);
+          padding: 24px;
+        }
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: 24px 16px 50px;
+        }
+
+        .nav {
+          flex-direction: column;
+        }
+
+        .nav a {
+          width: 100%;
+          text-align: center;
+        }
+
+        .menu {
+          flex-direction: column;
+        }
+
+        .card {
+          text-align: center;
+        }
+
+        .news {
+          padding: 24px;
+        }
+
+        .games-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .filters {
+          justify-content: flex-start;
+        }
+
+        .filter-btn {
+          font-size: 0.85rem;
+          padding: 8px 16px;
+        }
+
+        .stats-section {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        .game-card {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        .menu a {
+          width: 100%;
+          text-align: center;
+        }
+
+        .game-icon {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎮 GameZone</h1>
+        <p>Ta base secrète pour lancer des parties, suivre l'actu et découvrir les prochains hits.</p>
+      </header>
+
+      <nav class="nav">
+        <a href="#accueil">Accueil</a>
+        <a href="#liste-jeux">Liste des jeux</a>
+        <a href="#apropos">À propos</a>
+      </nav>
+
+      <!-- Page Accueil -->
+      <section id="accueil" class="page-section">
+        <section class="hero">
+          <h2>Mode Arcade Activé</h2>
+          <p>
+            Connecte-toi, choisis ton univers et lance la partie. GameZone te propose un hub rapide avec les
+            prochaines sorties, des playlists multi-joueurs et un suivi de ton temps de jeu.
+          </p>
+
+          <div class="menu">
+            <a href="#accueil">Commencer un jeu</a>
+            <a href="#liste-jeux">Liste des jeux</a>
+            <a href="#apropos">À propos</a>
+          </div>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h3>🔥 Tendances</h3>
+            <p>Nouveaux défis saisonniers, événements e-sport et promotions exclusives à entrer avant minuit.</p>
+          </article>
+          <article class="card">
+            <h3>🎯 Ton Profil</h3>
+            <p>Statistiques, succès débloqués, classement avec les potes et progression cross-platform.</p>
+          </article>
+          <article class="card">
+            <h3>🕹️ Playlist</h3>
+            <p>Action, RPG, retro ou party games : GameZone te suggère des sessions adaptées à ta vibe.</p>
+          </article>
+        </section>
+
+        <section class="news">
+          <small>NEWSFLASH</small>
+          <h2>Tournoi GameZone Cup</h2>
+          <p>
+            Inscriptions ouvertes pour le sprint multi-jeux du week-end ! Réunis ton escouade, gagne des skins rares
+            et grimpe au Hall of Fame.
+          </p>
+        </section>
+      </section>
+
+      <!-- Page Liste des jeux -->
+      <section id="liste-jeux" class="page-section">
+        <section class="stats-section">
+          <div class="stat-item">
+            <span class="stat-number">127</span>
+            <span class="stat-label">Jeux disponibles</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">45</span>
+            <span class="stat-label">Nouveautés</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">12</span>
+            <span class="stat-label">Catégories</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">8.5</span>
+            <span class="stat-label">Note moyenne</span>
+          </div>
+        </section>
+
+        <div class="filters">
+          <button class="filter-btn active">Tous</button>
+          <button class="filter-btn">Action</button>
+          <button class="filter-btn">RPG</button>
+          <button class="filter-btn">Stratégie</button>
+          <button class="filter-btn">Aventure</button>
+          <button class="filter-btn">Sport</button>
+        </div>
+
+        <section class="games-grid">
+          <article class="game-card">
+            <div class="game-icon">⚔️</div>
+            <h3>Shadow Legends</h3>
+            <p>Plonge dans un monde fantastique rempli de créatures magiques et de quêtes épiques. Un RPG immersif avec un système de combat tactique.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 9.2</span>
+              <span class="game-genre">RPG</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🏎️</div>
+            <h3>Speed Racer Pro</h3>
+            <p>Course de vitesse intense avec des graphismes ultra-réalistes. Personnalise ton bolide et affronte les meilleurs pilotes du monde.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.7</span>
+              <span class="game-genre">Course</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🎯</div>
+            <h3>Battle Arena</h3>
+            <p>Combat multijoueur en temps réel. Forme ton équipe, maîtrise les combos et domine l'arène dans ce jeu de stratégie compétitive.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 9.0</span>
+              <span class="game-genre">Stratégie</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🧙</div>
+            <h3>Magic Quest</h3>
+            <p>Explore des donjons mystérieux, résous des énigmes complexes et collecte des artefacts légendaires dans cette aventure magique.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.9</span>
+              <span class="game-genre">Aventure</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">⚽</div>
+            <h3>Football Manager 2025</h3>
+            <p>Gère ton équipe de football, recrute des talents, développe des stratégies et mène ton club vers la gloire internationale.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.6</span>
+              <span class="game-genre">Sport</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🛸</div>
+            <h3>Space Invaders Ultra</h3>
+            <p>Défends la Terre contre une invasion extraterrestre dans cette version moderne du classique. Graphismes 4K et gameplay amélioré.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.4</span>
+              <span class="game-genre">Action</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🏰</div>
+            <h3>Castle Defense</h3>
+            <p>Construis des défenses, recrute des unités et protège ton royaume contre les vagues d'ennemis dans ce tower defense stratégique.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.8</span>
+              <span class="game-genre">Stratégie</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🎮</div>
+            <h3>Retro Arcade</h3>
+            <p>Collection de jeux rétro remasterisés. Pac-Man, Tetris, Space Invaders et bien plus dans une expérience nostalgique moderne.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 9.1</span>
+              <span class="game-genre">Arcade</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+
+          <article class="game-card">
+            <div class="game-icon">🌊</div>
+            <h3>Ocean Explorer</h3>
+            <p>Plonge dans les profondeurs océaniques, découvre des créatures marines rares et explore des épaves mystérieuses.</p>
+            <div class="game-meta">
+              <span class="game-rating">⭐ 8.5</span>
+              <span class="game-genre">Aventure</span>
+            </div>
+            <a href="#" class="game-btn">Jouer maintenant</a>
+          </article>
+        </section>
+      </section>
+
+      <!-- Page À propos -->
+      <section id="apropos" class="page-section">
+        <section class="hero">
+          <h2>À propos de GameZone</h2>
+          <p>
+            GameZone est votre destination ultime pour découvrir, jouer et partager vos jeux préférés. 
+            Notre plateforme offre une expérience complète avec des milliers de jeux, des statistiques détaillées 
+            et une communauté active de joueurs passionnés.
+          </p>
+        </section>
+
+        <section class="grid">
+          <article class="card">
+            <h3>🎯 Notre Mission</h3>
+            <p>Réunir tous les joueurs autour d'une plateforme moderne, intuitive et riche en fonctionnalités pour une expérience de jeu optimale.</p>
+          </article>
+          <article class="card">
+            <h3>🚀 Innovation</h3>
+            <p>Nous intégrons les dernières technologies pour offrir des performances exceptionnelles et une interface utilisateur fluide.</p>
+          </article>
+          <article class="card">
+            <h3>👥 Communauté</h3>
+            <p>Rejoignez une communauté dynamique de millions de joueurs qui partagent leur passion pour le gaming.</p>
+          </article>
+        </section>
+      </section>
+
+      <footer>© 2025 GameZone — Level up your fun.</footer>
+    </div>
+  </body>
+</html>
